@@ -5,87 +5,61 @@ const sequelize = db.sequelize;
 const Movie = db.Movie;
 
 const moviesController = {
-    'list': async (req, res) => {
-        db.Movie.findAll()
-            .then(movies => {
-                res.render('moviesList.ejs', { movies })
-            })
+    list: async (req, res) => {
+        let movieList=[]
+        try{
+            movieList=await Movie.findAll();
+            return res.render('moviesList',{movieList})
+        }catch(err){
+            console.log(err)
+        }
+            
     },
-    'detail': (req, res) => {
-        db.Movie.findByPk(req.params.id)
-            .then(movie => {
-                res.render('moviesDetail.ejs', { movie });
-            });
+    detail: async (req, res) => {
+        try{
+            movie=await Movie.findByPk(req.params.id);
+            return res.render('moviesDetail',{movie})
+        }catch(err){
+            console.log(err)
+        }
     },
-    'new': (req, res) => {
-        db.Movie.findAll({
-            order: [
-                ['release_date', 'DESC']
-            ],
-            limit: 5
-        })
-            .then(movies => {
-                res.render('newestMovies', { movies });
-            });
+    new:(req, res) => {
+        return res.render('moviesAdd')
+       
+        
     },
-    'recomended': (req, res) => {
-        db.Movie.findAll({
-            where: {
-                rating: { [db.Sequelize.Op.gte]: 8 }
-            },
-            order: [
-                ['rating', 'DESC']
-            ]
-        })
-            .then(movies => {
-
-
-                res.render('recommendedMovies.ejs', { movies });
-            });
+    recomended: (req, res) => {
+        
     }, //Aqui debemos modificar y completar lo necesario para trabajar con el CRUD
     add: function (req, res) {
         res.render('moviesAdd.ejs');
     },
     create: async function (req, res) {
-        // Recibo los datos del formulario completado en la petición
-        // req.body == { name: valor, rating: valor }
-
-        try {
-            const peliculaCreada = await Movie.create(req.body)
-            return res.send(peliculaCreada);
-        } catch (error) {
-            console.log(error);
-            return res.send('Hubo un error')
+         try{
+            movie=await Movie.create(req.body);
+            return res.redirect('/movies')
+        }catch(err){
+            console.log(err)
+        } 
+    },
+    delete: async function (req, res) {
+        try{
+            movie=await Movie.findByPk(req.params.id);
+            return res.render('moviesDelete.ejs',{movie});
+        }catch(err){
+            console.log(err)
         }
-
-    },
-    edit: async function (req, res) {
-        // 1) Busco los datos de la movie
-        // 2) Renderizo vista de edición con esos datos
-        const movieToEdit = await Movie.findByPk(req.params.id);
-
-        return res.render('moviesEdit', { Movie: movieToEdit })
-
-    },
-    update: async function (req, res) {
-
-        const movieActualizada = await Movie.update(
-            req.body,
-            {
-                where: {
-                    id: req.params.id
-                }
-            }
-        );
-        return res.send(movieActualizada)
-
-    },
-    delete: function (req, res) {
-        // TODO
+        
     },
     destroy: async function (req, res) {
-       
-        await Movie.destroy({where: {id: req.params.id}})
+        try{
+            movie=await Movie.destroy({
+                where:{id:req.params.id}
+            });
+            return res.redirect('/movies');
+        }catch(err){
+            console.log(err)
+        }
     }
 
 }
