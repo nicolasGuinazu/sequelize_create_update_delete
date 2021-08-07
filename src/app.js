@@ -1,13 +1,14 @@
 const express = require('express');
 const path = require('path');
 require('dotenv').config()
-
+var methodOverride = require('method-override')
 const indexRouter = require('./routes/index');
 
 const moviesRoutes = require('./routes/moviesRoutes');
 const genresRoutes = require('./routes/genresRoutes');
 const app = express();
 
+app.use(methodOverride('_method'))
 // view engine setup
 app.set('views', path.resolve(__dirname, './views'));
 app.set('view engine', 'ejs');
