@@ -21,7 +21,11 @@
     <ul>
         
         <% movieList.forEach(element => { %>
-            <li><a class="detail" href="/movies/detail/<%= element.id %>"><%= element.title %></a> <a href="/movies/delete/<%= element.id %>">Delete</a></li>
+            <li>
+                <a class="detail" href="/movies/detail/<%= element.id %>"><%= element.title %></a> 
+                <a href="/movies/delete/<%= element.id %>">Delete</a>
+                <a href="/movies/edit/<%= element.id %>">Edit</a>
+            </li>
             
         <% }) %>
 
