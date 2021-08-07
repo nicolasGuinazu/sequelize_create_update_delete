@@ -1,6 +1,6 @@
 const db = require('../database/models');
 const sequelize = db.sequelize;
-
+const { Op } = require("sequelize");
 //Otra forma de llamar a los modelos
 const Movie = db.Movie;
 
@@ -24,16 +24,34 @@ const moviesController = {
         }
     },
     new:(req, res) => {
-        return res.render('moviesAdd')
-       
+        return res.render('moviesAdd') 
         
     },
-    recomended: (req, res) => {
+    recommended: async(req, res) => {
+        let order;
+        if(req.params.order==='asc'){
+            order='ASC'
+        }else{
+            order='DESC'
+        }
+        try{
+            movies=await Movie.findAll({
+                where:{
+                    rating: {
+                        [Op.gt]: 7
+                      }
+                },
+                order: [
+                    
+                    ['rating', order],
+                ]
+            });
+            return res.render('recommendedMovies',{movies}) 
+        }catch(err){
+            console.log(err)
+        } 
         
-    }, //Aqui debemos modificar y completar lo necesario para trabajar con el CRUD
-    add: function (req, res) {
-        res.render('moviesAdd.ejs');
-    },
+    }, 
     create: async function (req, res) {
          try{
             movie=await Movie.create(req.body);
@@ -46,6 +64,26 @@ const moviesController = {
         try{
             movie=await Movie.findByPk(req.params.id);
             return res.render('moviesDelete.ejs',{movie});
+        }catch(err){
+            console.log(err)
+        }
+        
+    },
+    edit: async function (req, res) {
+        try{
+            movie=await Movie.findByPk(req.params.id);
+            return res.render('moviesEdit',{movie});
+        }catch(err){
+            console.log(err)
+        }
+        
+    },
+    processEdit: async function (req, res) {
+        try{
+            editedMovie=await Movie.update(req.body,{
+                where:{id:req.params.id}
+            });
+            return res.redirect('/movies')
         }catch(err){
             console.log(err)
         }
