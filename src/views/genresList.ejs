@@ -15,12 +15,11 @@
       </figure>
     <h1>LISTADO DE GENEROS</h1>
     <ul>
-        <% for( let i = 0; i < genres.length; i++ ) { %>
-        <li>
-            <a href="/genres/detail/<%= genres[i].id %>"><%= genres[i].name %></a>
-        </li>
-        <% } %>
-
+        <% genreList.forEach(genre=> { %>
+            <li>
+                <a href="/genres/detail/<%= genre.id %>"><%= genre.name %></a>
+            </li>
+        <% }) %>
     </ul>
 </body>
 
