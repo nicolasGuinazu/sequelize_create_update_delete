@@ -10,14 +10,23 @@
     <figure>
         <img src="/img/logo-DH.png" alt="Logo Digital House">
     </figure>
-    <h1>PEÍCULAS ORDENADAS POR POSICIÓN</h1>
+    <h1>PEÍCULAS ORDENADAS POR:</h1>
+    <div>
+        <form action='/movies/recommended/asc' method="GET"> 
+            <button type="submit">Peor rating</button>
+        </form>
+        <form action='/movies/recommended/desc' method="GET"> 
+            <button type="submit">Mejor rating</button>
+        </form>
+    </div>
+ 
     <ul>
-        <% for( let i = 0; i < movies.length; i++ ) { %>
+        <% movies.forEach(movie=> { %>
         <li>
-            <a href="/movies/detail/<%=movies[i].id%>"><%= movies[i].title %> </a> <br>
-            <%= 'RATING: ' + movies[i].rating %> 
+            <a href="/movies/detail/<%=movie.id%>"><%= movie.title %> </a> <br>
+            <%= 'RATING: ' + movie.rating %> 
         </li>
-        <% } %>
+        <% }) %>
         
     </ul>
 </body>
