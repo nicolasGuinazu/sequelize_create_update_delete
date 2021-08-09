@@ -17,7 +17,9 @@ const moviesController = {
     },
     detail: async (req, res) => {
         try{
-            movie=await Movie.findByPk(req.params.id);
+            movie=await Movie.findByPk(req.params.id,{
+                include:[{association:"genre"}]
+            });
             return res.render('moviesDetail',{movie})
         }catch(err){
             console.log(err)
