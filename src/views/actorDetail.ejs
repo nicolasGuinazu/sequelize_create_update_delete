@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/css/style.css' />
+
+</head>
+<body>
+    <figure>
+        <img src="/img/logo-DH.png" alt="Logo Digital House">
+    </figure>
+    <% if (actor) { %>
+        <ul>
+            <%= actor.first_name %>
+            <%= actor.last_name %>
+        </ul>   
+        
+    <% } %>
+     
+    <% if (actor.movies) { %>
+        <% actor.movies.forEach(element => { %>
+         <h1><%= element.title%></h1>
+        <% }) %> 
+        
+    <% } %>
+        
+
+
+</body>
+</html>
