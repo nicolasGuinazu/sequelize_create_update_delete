@@ -19,6 +19,13 @@
         <p>GENRE: <%= movie.genre.name %> </p>
         <p>LENGTH: <%= movie.length + ' min'%> </p>
         <p>RELEASE DATE: <%= movie.release_date %> </p>
+        <p>Actors</p>
+        <ul>
+            <% movie.actors.forEach(element => { %>
+                <li><%= element.first_name %>  <%= element.last_name %></li>
+            <% }) %>
+        </ul>
+        
     <% }else{ %>
         <p>mmmm such not found</p>
     <% } %>
