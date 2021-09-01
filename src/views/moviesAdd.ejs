@@ -17,24 +17,24 @@
     <section class="formulario">
         <form action="/movies/create" method="POST">
             <label for="title">Title </label>
-            <p><input type="text" name="title" id="" required></p>
+            <p><input type="text" name="title" id="title" ></p>
             <label for="rating">Rating </label>
-            <p><input type="number" name="rating" id="" required> </p>
+            <p><input type="number" name="rating" id="rating" > </p>
             <label for="awards">Awards </label>
-            <p><input type="number" name="awards" id="" required></p>
+            <p><input type="number" name="awards" id="awards" ></p>
             <label for="release_date">Release date </label>
-            <p><input type="date" name="release_date" id="" required></p>
+            <p><input type="date" name="release_date" id="" ></p>
             <label for="length">Length </label>
-            <p><input type="number" name="length" id="" required></p>
+            <p><input type="number" name="length" id="length" ></p>
 
             <br>
-            <p> <button class="botonAgregar" type="submit">Agregar</button>
+            <p> <button class="botonAgregar" type="submit" id="boton">Agregar</button>
             
             
         </form>
         <a  class="botonVolver" href="/movies">Listado de Películas</a></p>
     </section>
-    
+    <script src="/js/validations.js"></script>
 </body>
 
 </html>
